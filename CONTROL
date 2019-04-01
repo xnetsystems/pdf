@@ -1,0 +1,4 @@
+Source: pdf
+Version: 0.9.6
+Description: Wrapper library for PoDoFo.
+Build-Depends: utf8proc, podofo

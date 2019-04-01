@@ -1,0 +1,6 @@
+*         text=lf
+*.cmd     text eol=crlf
+*.rc.in   text eol=crlf
+*.rc      text eol=crlf
+*.sh      text eol=lf
+makefile  text eol=lf
