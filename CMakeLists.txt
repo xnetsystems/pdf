@@ -34,9 +34,6 @@ else()
   target_link_libraries(${PROJECT_NAME} PRIVATE OpenSSL::Crypto)
 endif()
 
-find_package(Threads REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads)
-
 find_package(BZip2 REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE BZip2::BZip2)
 
