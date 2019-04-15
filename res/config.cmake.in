@@ -1,5 +1,5 @@
 @PACKAGE_INIT@
-include(FindDependencyMacro)
+include(CMakeFindDependencyMacro)
 
 if(NOT WIN32)
   find_dependency(OpenSSL REQUIRED)
