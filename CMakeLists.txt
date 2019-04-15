@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14.0 FATAL_ERROR)
 project(pdf VERSION 0.9.6 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -30,12 +30,7 @@ find_package(BZip2 REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE BZip2::BZip2)
 
 find_package(LibLZMA REQUIRED)
-if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.14.0")
-  target_link_libraries(${PROJECT_NAME} PUBLIC LibLZMA::LibLZMA)
-else()
-  target_include_directories(${PROJECT_NAME} PUBLIC ${LIBLZMA_INCLUDE_DIRS})
-  target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBLZMA_LIBRARIES})
-endif()
+target_link_libraries(${PROJECT_NAME} PUBLIC LibLZMA::LibLZMA)
 
 find_package(Freetype REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Freetype::Freetype)
