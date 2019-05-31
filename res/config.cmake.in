@@ -13,4 +13,7 @@ find_dependency(PNG REQUIRED)
 find_dependency(TIFF REQUIRED)
 find_dependency(ZLIB REQUIRED)
 
+vcpkg_find_library(PoDoFo::PoDoFo podofo/podofo.h podofo)
+vcpkg_find_library(utf8proc::utf8proc utf8proc.h utf8proc utf8proc_static)
+
 include("${CMAKE_CURRENT_LIST_DIR}/pdf-targets.cmake")

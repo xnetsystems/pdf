@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE src PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 if(WIN32)
-  target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32)
+  target_link_libraries(${PROJECT_NAME} PRIVATE crypt32 ws2_32)
 else()
   find_package(OpenSSL REQUIRED)
   target_link_libraries(${PROJECT_NAME} PRIVATE OpenSSL::Crypto)
@@ -47,21 +47,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE TIFF::TIFF)
 find_package(ZLIB REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
 
-find_path(PODOFO_INCLUDE_DIR podofo/podofo.h)
-find_library(PODOFO_LIBRARY NAMES podofo)
-if(NOT PODOFO_INCLUDE_DIR OR NOT PODOFO_LIBRARY)
-  message(FATAL_ERROR "Could not find library: podofo")
-endif()
-target_include_directories(${PROJECT_NAME} PRIVATE ${PODOFO_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PODOFO_LIBRARY})
+vcpkg_find_library(PoDoFo::PoDoFo podofo/podofo.h podofo)
+target_link_libraries(${PROJECT_NAME} PRIVATE PoDoFo::PoDoFo)
 
-find_path(UTF8PROC_INCLUDE_DIR utf8proc.h)
-find_library(UTF8PROC_LIBRARY NAMES utf8proc)
-if(NOT UTF8PROC_INCLUDE_DIR OR NOT UTF8PROC_LIBRARY)
-  message(FATAL_ERROR "Could not find library: utf8proc")
-endif()
-target_include_directories(${PROJECT_NAME} PRIVATE ${UTF8PROC_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${UTF8PROC_LIBRARY})
+vcpkg_find_library(utf8proc::utf8proc utf8proc.h utf8proc utf8proc_static)
+target_compile_definitions(${PROJECT_NAME} PRIVATE UTF8PROC_STATIC=1)
+target_link_libraries(${PROJECT_NAME} PRIVATE utf8proc::utf8proc)
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
   RUNTIME DESTINATION bin
