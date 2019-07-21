@@ -47,12 +47,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE TIFF::TIFF)
 find_package(ZLIB REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
 
-vcpkg_find_library(PoDoFo::PoDoFo podofo/podofo.h podofo)
-target_link_libraries(${PROJECT_NAME} PRIVATE PoDoFo::PoDoFo)
+find_path(PODOFO_INCLUDE_DIR podofo/podofo.h)
+find_library(PODOFO_LIBRARY NAMES podofo)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PODOFO_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PODOFO_LIBRARY})
 
-vcpkg_find_library(utf8proc::utf8proc utf8proc.h utf8proc utf8proc_static)
+find_path(UTF8PROC_INCLUDE_DIR utf8proc.h)
+find_library(UTF8PROC_LIBRARY NAMES utf8proc utf8proc_static)
 target_compile_definitions(${PROJECT_NAME} PRIVATE UTF8PROC_STATIC=1)
-target_link_libraries(${PROJECT_NAME} PRIVATE utf8proc::utf8proc)
+target_include_directories(${PROJECT_NAME} PRIVATE ${UTF8PROC_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${UTF8PROC_LIBRARY})
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
   RUNTIME DESTINATION bin
