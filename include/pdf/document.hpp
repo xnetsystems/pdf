@@ -4,8 +4,8 @@
 #include <pdf/page.hpp>
 #include <filesystem>
 #include <memory>
-#include <string>
 #include <ostream>
+#include <string>
 
 #ifdef _MSC_VER
 #pragma warning(push)

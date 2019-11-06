@@ -10,8 +10,7 @@ public:
   units cy;
 
   constexpr size() noexcept = default;
-  constexpr size(units cx, units cy) noexcept : cx(cx), cy(cy) {
-  }
+  constexpr size(units cx, units cy) noexcept : cx(cx), cy(cy) {}
 };
 
 }  // namespace pdf

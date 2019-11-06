@@ -24,8 +24,7 @@ public:
   constexpr static double dpi = 72.0;
 
   constexpr units() noexcept = default;
-  constexpr units(double pt) noexcept : pt_(pt) {
-  }
+  constexpr units(double pt) noexcept : pt_(pt) {}
 
   constexpr double pt() const noexcept {
     return pt_;

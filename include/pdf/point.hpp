@@ -10,8 +10,7 @@ public:
   units y;
 
   constexpr point() noexcept = default;
-  constexpr point(units x, units y) noexcept : x(x), y(y) {
-  }
+  constexpr point(units x, units y) noexcept : x(x), y(y) {}
 };
 
 }  // namespace pdf

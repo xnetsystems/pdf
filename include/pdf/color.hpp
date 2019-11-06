@@ -10,11 +10,9 @@ struct color {
   std::uint8_t b = 0;
 
   constexpr color() noexcept = default;
-  constexpr color(std::uint32_t v) noexcept :
-    r(static_cast<std::uint8_t>(v >> 16 & 0xFF)), g(static_cast<std::uint8_t>(v >> 8 & 0xFF)), b(v & 0xFF) {
-  }
-  constexpr color(std::uint8_t r, std::uint8_t g, std::uint8_t b) noexcept : r(r), g(g), b(b) {
-  }
+  constexpr color(std::uint32_t v) noexcept
+    : r(static_cast<std::uint8_t>(v >> 16 & 0xFF)), g(static_cast<std::uint8_t>(v >> 8 & 0xFF)), b(v & 0xFF) {}
+  constexpr color(std::uint8_t r, std::uint8_t g, std::uint8_t b) noexcept : r(r), g(g), b(b) {}
 };
 
 }  // namespace pdf

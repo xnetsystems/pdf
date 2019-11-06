@@ -1,18 +1,13 @@
-# Hidden
+/*
 .*
-!.clang-format
-!.gitattributes
-!.gitignore
-
-# Build
-/build/
-/tzdata/
-
-# Install
-/bin/
-/lib/
-
-# Debug
-/*.core
-/*.log
-/core
+!/include/
+!/res/
+!/src/
+!/.clang-format
+!/.editorconfig
+!/.gitignore
+!/CMakeLists.txt
+!/CONTROL
+!/license.txt
+!/portfile.cmake
+!/readme.md

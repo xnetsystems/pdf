@@ -1,7 +1,7 @@
 ---
 BasedOnStyle: LLVM
 AccessModifierOffset: -2
-AlignAfterOpenBracket: DontAlign
+AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 AlignEscapedNewlines: Left
@@ -10,7 +10,7 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
@@ -23,11 +23,11 @@ BraceWrapping:
   AfterClass: false
   AfterControlStatement: false
   AfterEnum: false
-  AfterFunction: true
+  AfterFunction: false
   AfterNamespace: false
   AfterStruct: false
   AfterUnion: false
-  AfterExternBlock: true
+  AfterExternBlock: false
   BeforeCatch: true
   BeforeElse: false
   IndentBraces: false
@@ -40,12 +40,12 @@ BreakBeforeInheritanceComma: false
 BreakInheritanceList: AfterColon
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: false
-BreakConstructorInitializers: AfterColon
+BreakConstructorInitializers: BeforeColon
 BreakStringLiterals: false
 ColumnLimit: 120
 CommentPragmas: '^ (NOTE|TODO):'
 CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 2
 ContinuationIndentWidth: 2
 DerivePointerAlignment: false
@@ -55,7 +55,7 @@ FixNamespaceComments: true
 IncludeBlocks: Preserve
 IncludeIsMainRegex: '(_test)?$'
 IndentCaseLabels: false
-IndentPPDirectives: AfterHash
+IndentPPDirectives: None
 IndentWidth: 2
 IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: false
@@ -100,9 +100,9 @@ ForEachMacros:
 IncludeCategories:
   - Regex: '^"'
     Priority: 1
-  - Regex: '^<pdf/'  # project namespace
-    Priority: 2
   - Regex: '^<.*\.(hh|hpp|hxx)>'
+    Priority: 2
+  - Regex: '^<.*\/.*>'
     Priority: 3
   - Regex: '^<(ntifs|windows).h>'
     Priority: 4

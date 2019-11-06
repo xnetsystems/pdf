@@ -1,12 +1,12 @@
-#include <pdf/page.hpp>
+#include "encode.hpp"
 #include <pdf/document.hpp>
+#include <pdf/page.hpp>
+#include <utf8proc.h>
 #include <algorithm>
+#include <iostream>
+#include <iterator>
 #include <limits>
 #include <vector>
-#include <iterator>
-#include <iostream>
-#include <utf8proc.h>
-#include "encode.hpp"
 using namespace PoDoFo;
 
 namespace pdf {
@@ -46,37 +46,55 @@ public:
   }
 };
 
-page::page(document& doc, rect ps) : impl_(std::make_unique<impl>(doc, PdfRect(ps.x, -(ps.cy - ps.y), ps.cx, -ps.cy))) {
-}
+page::page(document& doc, rect ps)
+  : impl_(std::make_unique<impl>(doc, PdfRect(ps.x, -(ps.cy - ps.y), ps.cx, -ps.cy))) {}
 
 page::page(document& doc, preset preset, bool landscape) {
   auto size = ePdfPageSize_A4;
   switch (preset) {
-  case preset::a0: size = ePdfPageSize_A0; break;
-  case preset::a1: size = ePdfPageSize_A1; break;
-  case preset::a2: size = ePdfPageSize_A2; break;
-  case preset::a3: size = ePdfPageSize_A3; break;
-  case preset::a4: size = ePdfPageSize_A4; break;
-  case preset::a5: size = ePdfPageSize_A5; break;
-  case preset::a6: size = ePdfPageSize_A6; break;
-  case preset::letter: size = ePdfPageSize_Letter; break;
-  case preset::legal: size = ePdfPageSize_Legal; break;
-  case preset::tabloid: size = ePdfPageSize_Tabloid; break;
+  case preset::a0:
+    size = ePdfPageSize_A0;
+    break;
+  case preset::a1:
+    size = ePdfPageSize_A1;
+    break;
+  case preset::a2:
+    size = ePdfPageSize_A2;
+    break;
+  case preset::a3:
+    size = ePdfPageSize_A3;
+    break;
+  case preset::a4:
+    size = ePdfPageSize_A4;
+    break;
+  case preset::a5:
+    size = ePdfPageSize_A5;
+    break;
+  case preset::a6:
+    size = ePdfPageSize_A6;
+    break;
+  case preset::letter:
+    size = ePdfPageSize_Letter;
+    break;
+  case preset::legal:
+    size = ePdfPageSize_Legal;
+    break;
+  case preset::tabloid:
+    size = ePdfPageSize_Tabloid;
+    break;
   }
   auto rc = PdfPage::CreateStandardPageSize(size, landscape);
   impl_ = std::make_unique<impl>(doc, rc);
 }
 
-page::page(page&& other) : impl_(std::move(other.impl_)) {
-}
+page::page(page&& other) : impl_(std::move(other.impl_)) {}
 
 page& page::operator=(page&& other) {
   impl_ = std::move(other.impl_);
   return *this;
 }
 
-page::~page() {
-}
+page::~page() {}
 
 void page::color(const pdf::color& color) {
   check(impl_);
@@ -98,9 +116,15 @@ void page::stroke_style(pdf::style style) {
   check(impl_);
   auto pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Miter;
   switch (style) {
-  case pdf::style::miter: pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Miter; break;
-  case pdf::style::round: pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Round; break;
-  case pdf::style::bevel: pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Bevel; break;
+  case pdf::style::miter:
+    pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Miter;
+    break;
+  case pdf::style::round:
+    pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Round;
+    break;
+  case pdf::style::bevel:
+    pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Bevel;
+    break;
   }
   impl_->painter.SetLineJoinStyle(pdf_style);
 }
@@ -197,9 +221,15 @@ units page::draw_text(const point& pt, const std::string& text, units cx, alignm
     }
     auto align = ePdfAlignment_Left;
     switch (alignment) {
-    case alignment::left: align = ePdfAlignment_Left; break;
-    case alignment::center: align = ePdfAlignment_Center; break;
-    case alignment::right: align = ePdfAlignment_Right; break;
+    case alignment::left:
+      align = ePdfAlignment_Left;
+      break;
+    case alignment::center:
+      align = ePdfAlignment_Center;
+      break;
+    case alignment::right:
+      align = ePdfAlignment_Right;
+      break;
     }
     impl_->painter.DrawTextAligned(x, y, cx, pdf_text, align);
     return pdf_text_width;
@@ -207,12 +237,7 @@ units page::draw_text(const point& pt, const std::string& text, units cx, alignm
   return 0;
 }
 
-units page::draw_text_90(const double& angle,
-  const units& cx,
-  const units& cy,
-  const std::string& text,
-  units width,
-  alignment align) {
+units page::draw_text_90(const double& angle, const units& cx, const units& cy, const std::string& text, units width, alignment align) {
   check(impl_);
   auto x = impl_->cx - cx;
   auto y = impl_->cy - cy;

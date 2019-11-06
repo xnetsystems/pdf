@@ -11,19 +11,16 @@ public:
   PdfOutputDevice device;
   PdfStreamedDocument doc;
 
-  impl(std::ostream& os) : device(&os), doc(&device) {
-  }
+  impl(std::ostream& os) : device(&os), doc(&device) {}
 
   ~impl() {
     doc.Close();
   }
 };
 
-document::document(std::ostream& os) : impl_(std::make_unique<impl>(os)) {
-}
+document::document(std::ostream& os) : impl_(std::make_unique<impl>(os)) {}
 
-document::~document() {
-}
+document::~document() {}
 
 page document::create_page(rect ps) {
   return page(*this, ps);
@@ -42,8 +39,8 @@ font document::create_font(const std::filesystem::path& filename) {
     throw std::runtime_error("pdf: font file not found");
   }
   FT_Face face = nullptr;
-  const auto filename_buffer = filename.u8string();
-  if (FT_New_Face(library, filename_buffer.data(), 0, &face)) {
+  const std::string u8filename = reinterpret_cast<const char*>(filename.u8string().data());
+  if (FT_New_Face(library, u8filename.data(), 0, &face)) {
     throw std::runtime_error("pdf: freetype load font error");
   }
   const auto font = impl_->doc.CreateFont(face);

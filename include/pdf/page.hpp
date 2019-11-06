@@ -1,13 +1,13 @@
 #pragma once
-#include <pdf/config.hpp>
 #include <pdf/color.hpp>
+#include <pdf/config.hpp>
 #include <pdf/font.hpp>
 #include <pdf/point.hpp>
 #include <pdf/rect.hpp>
 #include <pdf/units.hpp>
+#include <istream>
 #include <memory>
 #include <string>
-#include <istream>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -66,12 +66,7 @@ public:
   void font(font font, units size = 10);
 
   units draw_text(const point& pt, const std::string& text, units cx = 0, alignment align = alignment::left);
-  units draw_text_90(const double& angle,
-    const units& x,
-    const units& y,
-    const std::string& text,
-    units width = 0,
-    alignment align = alignment::left);
+  units draw_text_90(const double& angle, const units& x, const units& y, const std::string& text, units width = 0, alignment align = alignment::left);
   units text_width(const std::string& text) const;
 
   void draw_image(rect rc, const std::string& path, bool keep_aspect = true);
