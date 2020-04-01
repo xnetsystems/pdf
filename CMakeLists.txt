@@ -11,44 +11,47 @@ target_include_directories(pdf PRIVATE src PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 if(WIN32)
-  target_link_libraries(pdf PRIVATE crypt32 ws2_32)
+  target_link_libraries(pdf PUBLIC crypt32 ws2_32)
   target_compile_definitions(pdf PRIVATE _UNICODE UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
 else()
   find_package(OpenSSL REQUIRED)
-  target_link_libraries(pdf PRIVATE OpenSSL::Crypto)
+  target_link_libraries(pdf PUBLIC OpenSSL::Crypto)
 endif()
 
 find_package(BZip2 REQUIRED)
-target_link_libraries(pdf PRIVATE BZip2::BZip2)
+target_link_libraries(pdf PUBLIC BZip2::BZip2)
 
 find_package(LibLZMA REQUIRED)
 target_link_libraries(pdf PUBLIC LibLZMA::LibLZMA)
 
 find_package(Freetype REQUIRED)
-target_link_libraries(pdf PRIVATE Freetype::Freetype)
+target_link_libraries(pdf PUBLIC Freetype::Freetype)
+
+find_package(harfbuzz CONFIG REQUIRED)
+target_link_libraries(pdf PUBLIC harfbuzz::harfbuzz)
 
 find_package(JPEG REQUIRED)
-target_link_libraries(pdf PRIVATE JPEG::JPEG)
+target_link_libraries(pdf PUBLIC JPEG::JPEG)
 
 find_package(PNG REQUIRED)
-target_link_libraries(pdf PRIVATE PNG::PNG)
+target_link_libraries(pdf PUBLIC PNG::PNG)
 
 find_package(TIFF REQUIRED)
-target_link_libraries(pdf PRIVATE TIFF::TIFF)
+target_link_libraries(pdf PUBLIC TIFF::TIFF)
 
 find_package(ZLIB REQUIRED)
-target_link_libraries(pdf PRIVATE ZLIB::ZLIB)
+target_link_libraries(pdf PUBLIC ZLIB::ZLIB)
 
 find_path(PODOFO_INCLUDE_DIR podofo/podofo.h)
 find_library(PODOFO_LIBRARY NAMES podofo)
 target_include_directories(pdf PRIVATE ${PODOFO_INCLUDE_DIR})
-target_link_libraries(pdf PRIVATE ${PODOFO_LIBRARY})
+target_link_libraries(pdf PUBLIC ${PODOFO_LIBRARY})
 
 find_path(UTF8PROC_INCLUDE_DIR utf8proc.h)
 find_library(UTF8PROC_LIBRARY NAMES utf8proc utf8proc_static)
 target_compile_definitions(pdf PRIVATE UTF8PROC_STATIC=1)
 target_include_directories(pdf PRIVATE ${UTF8PROC_INCLUDE_DIR})
-target_link_libraries(pdf PRIVATE ${UTF8PROC_LIBRARY})
+target_link_libraries(pdf PUBLIC ${UTF8PROC_LIBRARY})
 
 install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")
 install(TARGETS pdf EXPORT pdf RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
