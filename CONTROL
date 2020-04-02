@@ -1,4 +1,4 @@
 Source: pdf
 Version: 0.9.6
 Description: Wrapper library for PoDoFo.
-Build-Depends: bzip2, freetype, libjpeg-turbo, libpng, liblzma, openssl (!windows&&!uwp), tiff, utf8proc, podofo, zlib
+Build-Depends: bzip2, freetype, harfbuzz, libjpeg-turbo, libpng, liblzma, openssl (!windows&&!uwp), tiff, utf8proc, podofo, zlib
