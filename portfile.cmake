@@ -1,6 +1,4 @@
-include(vcpkg_common_functions)
-
-set(VCPKG_LIBRARY_LINKAGE dynamic)
+vcpkg_check_linkage(ONLY_DYNAMIC_LIBRARY)
 
 vcpkg_configure_cmake(SOURCE_PATH ${CURRENT_PORT_DIR} PREFER_NINJA)
 
