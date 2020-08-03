@@ -15,7 +15,7 @@ if(WIN32)
   target_compile_definitions(pdf PRIVATE _UNICODE UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
 else()
   find_package(OpenSSL REQUIRED)
-  target_link_libraries(pdf PRIVATE OpenSSL::Crypto)
+  target_link_libraries(pdf PUBLIC OpenSSL::Crypto)
 endif()
 
 find_package(BZip2 REQUIRED)
@@ -37,7 +37,7 @@ find_package(PNG REQUIRED)
 target_link_libraries(pdf PRIVATE PNG::PNG)
 
 find_package(TIFF REQUIRED)
-target_link_libraries(pdf PRIVATE TIFF::TIFF)
+target_link_libraries(pdf PUBLIC TIFF::TIFF)
 
 find_package(ZLIB REQUIRED)
 target_link_libraries(pdf PRIVATE ZLIB::ZLIB)
