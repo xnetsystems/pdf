@@ -4,6 +4,7 @@
 !/res/
 !/src/
 !/.clang-format
+!/.clang-tidy
 !/.editorconfig
 !/.gitignore
 !/CMakeLists.txt
