@@ -8,8 +8,8 @@
 #include <string>
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4251)
+#  pragma warning(push)
+#  pragma warning(disable : 4251)
 #endif
 
 namespace PoDoFo {
@@ -20,7 +20,8 @@ class PdfStreamedDocument;
 
 namespace pdf {
 
-class PDF_API document {
+class PDF_API document
+{
 public:
   document(std::ostream& os);
 
@@ -63,5 +64,5 @@ private:
 }  // namespace pdf
 
 #ifdef _MSC_VER
-#pragma warning(pop)
+#  pragma warning(pop)
 #endif

@@ -4,7 +4,8 @@
 
 namespace pdf {
 
-struct size {
+struct size
+{
 public:
   units cx;
   units cy;

@@ -1,132 +1,135 @@
+# Clang-Format Configuration
 ---
 BasedOnStyle: LLVM
-AccessModifierOffset: -2
-AlignAfterOpenBracket: AlwaysBreak
-AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlines: Left
-AlignOperands: false
-AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: true
-AlwaysBreakTemplateDeclarations: Yes
-BinPackArguments: true
-BinPackParameters: false
-BraceWrapping:
-  AfterClass: false
-  AfterControlStatement: false
-  AfterEnum: false
-  AfterFunction: false
-  AfterNamespace: false
-  AfterStruct: false
-  AfterUnion: false
-  AfterExternBlock: false
-  BeforeCatch: true
-  BeforeElse: false
-  IndentBraces: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: false
-  SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Custom
-BreakBeforeInheritanceComma: false
-BreakInheritanceList: AfterColon
-BreakBeforeTernaryOperators: false
-BreakConstructorInitializersBeforeComma: false
-BreakConstructorInitializers: BeforeColon
-BreakStringLiterals: false
-ColumnLimit: 120
-CommentPragmas: '^ (NOTE|TODO):'
-CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+
+# Indent
 ConstructorInitializerIndentWidth: 2
 ContinuationIndentWidth: 2
-DerivePointerAlignment: false
-DisableFormat: false
-ExperimentalAutoDetectBinPacking: false
-FixNamespaceComments: true
-IncludeBlocks: Preserve
-IncludeIsMainRegex: '(_test)?$'
-IndentCaseLabels: false
-IndentPPDirectives: None
-IndentWidth: 2
-IndentWrappedFunctionNames: false
+IndentPPDirectives: AfterHash
+
+# Alignment
+AlignAfterOpenBracket: AlwaysBreak
+AlignEscapedNewlines: Left
+AlignOperands: DontAlign
+PointerAlignment: Left
+
+# Breaks
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
+AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: MultiLine
+  AfterFunction: true
+  AfterStruct: true
+  AfterUnion: true
+  BeforeCatch: true
+  BeforeElse: false
+  BeforeLambdaBody: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakBeforeBraces: Custom
 KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 2
-NamespaceIndentation: None
-PenaltyBreakAssignment: 2000
-PenaltyBreakBeforeFirstCallParameter: 1000
-PenaltyBreakComment: 500
+
+# Spaces
+Cpp11BracedListStyle: false
+SpacesInContainerLiterals: false
+
+# Columns
+ColumnLimit: 100
+PenaltyBreakAssignment: 100
+PenaltyBreakBeforeFirstCallParameter: 10
+PenaltyBreakComment: 100
 PenaltyBreakFirstLessLess: 100
-PenaltyBreakString: 4000
-PenaltyBreakTemplateDeclaration: 10
-PenaltyExcessCharacter: 2
-PenaltyReturnTypeOnItsOwnLine: 3000
-PointerAlignment: Left
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 10
+
+# Comments
 ReflowComments: false
-SortIncludes: false
-SortUsingDeclarations: false
-SpaceAfterCStyleCast: false
-SpaceAfterTemplateKeyword: true
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeCpp11BracedList: false
-SpaceBeforeCtorInitializerColon: true
-SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
-SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
-SpacesInAngles: false
-SpacesInContainerLiterals: true
-SpacesInCStyleCastParentheses: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
-TabWidth: 8
-UseTab: Never
+CommentPragmas: '^ (NOTE|TODO):'
+
+# Sorting
+SortUsingDeclarations: false
+
+# Line Endings
+DeriveLineEnding: false
+UseCRLF: false
 ---
 Language: Cpp
-Standard: Cpp11
-Cpp11BracedListStyle: false
-ForEachMacros:
-  - for co_await
-  - if constexpr
+Standard: c++20
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Preserve
 IncludeCategories:
+    # Relative Paths
   - Regex: '^"'
     Priority: 1
-  - Regex: '^<.*\.(hh|hpp|hxx)>'
+
+    # Windows Core Headers
+  - Regex: '^<(ntifs|windows)\.h>'
     Priority: 2
-  - Regex: '^<.*\/.*>'
+
+    # Windows Driver Headers
+  - Regex: '^<(ntddk|wdm)\.h>'
     Priority: 3
-  - Regex: '^<(ntifs|windows).h>'
-    Priority: 4
-  - Regex: '^<(ntddk|wdm.h>'
-    Priority: 5
+
+    # Windows Headers
   - Regex: '^<(wdf|shellapi|winsock2|ws2tcpip|mswsock)\.h>'
+    Priority: 4
+
+    # GTest Headers
+  - Regex: '^<(gtest|gmock)/'
+    Priority: 5
+    SortPriority: 0
+
+    # Library Headers
+  - Regex: '^<.*\.'
     Priority: 6
-  - Regex: '^<.*\.h>'
-    Priority: 7
-  - Regex: '^<c(assert|ctype|errno|fenv|float|inttypes|limits|locale|math|setjmp|signal|stdarg|stddef|stdint|stdio|stdlib|string|time|uchar|wchar|wctype)>'
-    Priority: 9
-  - Regex: '.*'
+
+    # C Compatibility Headers
+  - Regex: '^<c(a|c|e|f|i|l|m|s|t|u|w)'
     Priority: 8
-MacroBlockBegin: '^(BEGIN_.*MSG_MAP.*|ALT_MSG_MAP)$'
-MacroBlockEnd: '^(END_MSG_MAP)$'
-SortIncludes: true
+
+    # C++ Standard Library Headers
+  - Regex: '^<'
+    Priority: 7
+
+# Sources: a.hpp is main include for a.cpp, a_test.cpp, etc.
+IncludeIsMainRegex: '(_test|_win32|_posix)?$'
+
+# Headers: a.hpp, a_base.hpp, etc. are main includes for a.cpp
+IncludeIsMainSourceRegex: '(_base|_impl)?$'
+
+# Macros
+ForEachMacros:
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+
+MacroBlockBegin: '^BEGIN_(MSG_MAP|MSG_MAP_EX|UPDATE_UI_MAP)'
+MacroBlockEnd: '^END_(MSG_MAP|UPDATE_UI_MAP)'
+
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
 ---
 Language: ObjC
 DisableFormat: true
 ---
+Language: Java
+BreakAfterJavaFieldAnnotations: true
+---
 Language: JavaScript
 JavaScriptQuotes: Double
 JavaScriptWrapImports: true
----
-Language: Java
-BreakAfterJavaFieldAnnotations: true
 ...

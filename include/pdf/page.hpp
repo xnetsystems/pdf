@@ -10,8 +10,8 @@
 #include <string>
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4251)
+#  pragma warning(push)
+#  pragma warning(disable : 4251)
 #endif
 
 namespace PoDoFo {
@@ -30,7 +30,8 @@ enum class preset { a0, a1, a2, a3, a4, a5, a6, letter, legal, tabloid };
 
 class document;
 
-class PDF_API page {
+class PDF_API page
+{
 public:
   page(document& doc, rect ps);
   page(document& doc, preset preset = preset::a4, bool landscape = false);
@@ -65,8 +66,15 @@ public:
 
   void font(font font, units size = 10);
 
-  units draw_text(const point& pt, const std::string& text, units cx = 0, alignment align = alignment::left);
-  units draw_text_90(const double& angle, const units& x, const units& y, const std::string& text, units width = 0, alignment align = alignment::left);
+  units
+  draw_text(const point& pt, const std::string& text, units cx = 0, alignment align = alignment::left);
+  units draw_text_90(
+    const double& angle,
+    const units& x,
+    const units& y,
+    const std::string& text,
+    units width = 0,
+    alignment align = alignment::left);
   units text_width(const std::string& text) const;
 
   void draw_image(rect rc, const std::string& path, bool keep_aspect = true);
@@ -96,5 +104,5 @@ private:
 }  // namespace pdf
 
 #ifdef _MSC_VER
-#pragma warning(pop)
+#  pragma warning(pop)
 #endif

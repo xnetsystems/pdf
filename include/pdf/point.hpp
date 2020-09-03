@@ -4,7 +4,8 @@
 
 namespace pdf {
 
-struct point {
+struct point
+{
 public:
   units x;
   units y;

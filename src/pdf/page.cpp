@@ -13,7 +13,8 @@ namespace pdf {
 namespace {
 
 template <typename T>
-void check(const T& impl) {
+void check(const T& impl)
+{
   if (!impl) {
     throw std::runtime_error("pdf: invalid page");
   }
@@ -21,7 +22,8 @@ void check(const T& impl) {
 
 }  // namespace
 
-class page::impl {
+class page::impl
+{
 public:
   document& doc;
   PdfPage* page = nullptr;
@@ -34,22 +36,26 @@ public:
   double font_ascent = 0.0;
   double font_descent = 0.0;
 
-  impl(document& doc, PdfRect rc) : doc(doc) {
+  impl(document& doc, PdfRect rc) : doc(doc)
+  {
     page = doc.handle()->CreatePage(rc);
     cx = page->GetPageSize().GetWidth();
     cy = page->GetPageSize().GetHeight();
     painter.SetPage(page);
   }
 
-  ~impl() {
+  ~impl()
+  {
     painter.FinishPage();
   }
 };
 
 page::page(document& doc, rect ps)
-  : impl_(std::make_unique<impl>(doc, PdfRect(ps.x, -(ps.cy - ps.y), ps.cx, -ps.cy))) {}
+  : impl_(std::make_unique<impl>(doc, PdfRect(ps.x, -(ps.cy - ps.y), ps.cx, -ps.cy)))
+{}
 
-page::page(document& doc, preset preset, bool landscape) {
+page::page(document& doc, preset preset, bool landscape)
+{
   auto size = ePdfPageSize_A4;
   switch (preset) {
   case preset::a0:
@@ -89,14 +95,16 @@ page::page(document& doc, preset preset, bool landscape) {
 
 page::page(page&& other) : impl_(std::move(other.impl_)) {}
 
-page& page::operator=(page&& other) {
+page& page::operator=(page&& other)
+{
   impl_ = std::move(other.impl_);
   return *this;
 }
 
 page::~page() {}
 
-void page::color(const pdf::color& color) {
+void page::color(const pdf::color& color)
+{
   check(impl_);
   double r = color.r / 255.0;
   double g = color.g / 255.0;
@@ -104,7 +112,8 @@ void page::color(const pdf::color& color) {
   impl_->painter.SetColor(PdfColor(r, g, b));
 }
 
-void page::stroke_color(const pdf::color& col) {
+void page::stroke_color(const pdf::color& col)
+{
   check(impl_);
   double r = col.r / 255.0;
   double g = col.g / 255.0;
@@ -112,7 +121,8 @@ void page::stroke_color(const pdf::color& col) {
   impl_->painter.SetStrokingColor(PdfColor(r, g, b));
 }
 
-void page::stroke_style(pdf::style style) {
+void page::stroke_style(pdf::style style)
+{
   check(impl_);
   auto pdf_style = EPdfLineJoinStyle::ePdfLineJoinStyle_Miter;
   switch (style) {
@@ -129,22 +139,26 @@ void page::stroke_style(pdf::style style) {
   impl_->painter.SetLineJoinStyle(pdf_style);
 }
 
-void page::stroke_width(const units& width) {
+void page::stroke_width(const units& width)
+{
   check(impl_);
   impl_->painter.SetStrokeWidth(width);
 }
 
-void page::move_to(const point& pt) {
+void page::move_to(const point& pt)
+{
   check(impl_);
   impl_->painter.MoveTo(pt.x, impl_->cy - pt.y);
 }
 
-void page::line_to(const point& pt) {
+void page::line_to(const point& pt)
+{
   check(impl_);
   impl_->painter.LineTo(pt.x, impl_->cy - pt.y);
 }
 
-void page::close(bool connect, bool stroke, bool fill) {
+void page::close(bool connect, bool stroke, bool fill)
+{
   check(impl_);
   if (connect) {
     impl_->painter.ClosePath();
@@ -160,12 +174,14 @@ void page::close(bool connect, bool stroke, bool fill) {
   }
 }
 
-void page::draw_line(const point& a, const point& b) {
+void page::draw_line(const point& a, const point& b)
+{
   check(impl_);
   impl_->painter.DrawLine(a.x, impl_->cy - a.y, b.x, impl_->cy - b.y);
 }
 
-void page::draw_rect(const rect& rc, bool stroke, bool fill) {
+void page::draw_rect(const rect& rc, bool stroke, bool fill)
+{
   check(impl_);
   impl_->painter.MoveTo(rc.x, impl_->cy - rc.y);
   impl_->painter.LineTo(rc.x + rc.cx, impl_->cy - rc.y);
@@ -174,7 +190,8 @@ void page::draw_rect(const rect& rc, bool stroke, bool fill) {
   close(true, stroke, fill);
 }
 
-void page::font(pdf::font font, units size) {
+void page::font(pdf::font font, units size)
+{
   check(impl_);
   impl_->font = font;
   impl_->font_size = size;
@@ -184,7 +201,8 @@ void page::font(pdf::font font, units size) {
   impl_->painter.SetFont(impl_->font);
 }
 
-units page::draw_text(const point& pt, const std::string& text, units cx, alignment alignment) {
+units page::draw_text(const point& pt, const std::string& text, units cx, alignment alignment)
+{
   check(impl_);
   if (impl_->font) {
     auto x = pt.x;
@@ -212,7 +230,8 @@ units page::draw_text(const point& pt, const std::string& text, units cx, alignm
         }
         auto cw = units(metrics->UnicodeCharWidth(static_cast<unsigned short>(cp)));
         if (pdf_text_width + cw > cx) {
-          pdf_text = encode(std::string(text.data(), static_cast<std::size_t>(it - data)) + "\xE2\x80\xA6");
+          pdf_text = encode(
+            std::string(text.data(), static_cast<std::size_t>(it - data)) + "\xE2\x80\xA6");
           break;
         }
         pdf_text_width += cw;
@@ -237,24 +256,34 @@ units page::draw_text(const point& pt, const std::string& text, units cx, alignm
   return 0;
 }
 
-units page::draw_text_90(const double& angle, const units& cx, const units& cy, const std::string& text, units width, alignment align) {
+units page::draw_text_90(
+  const double& angle,
+  const units& cx,
+  const units& cy,
+  const std::string& text,
+  units width,
+  alignment align)
+{
   check(impl_);
   auto x = impl_->cx - cx;
   auto y = impl_->cy - cy;
   const double pi = std::acos(-1);
   auto rad = angle * pi / 180;
-  impl_->painter.SetTransformationMatrix(std::cos(rad), std::sin(rad), -std::sin(rad), std::cos(rad), 88.5_mm, 0);
+  impl_->painter.SetTransformationMatrix(
+    std::cos(rad), std::sin(rad), -std::sin(rad), std::cos(rad), 88.5_mm, 0);
   auto x_rota = x * std::cos(rad) + y * std::sin(rad);
   auto y_rota = x * -std::sin(rad) + y * std::cos(rad);
   return draw_text({ x_rota, y_rota }, text, width, align);
 }
 
-units page::text_width(const std::string& text) const {
+units page::text_width(const std::string& text) const
+{
   check(impl_);
   return impl_->font->GetFontMetrics()->StringWidth(encode(text));
 }
 
-void page::draw_image(rect rc, const std::string& path, bool keep_aspect) {
+void page::draw_image(rect rc, const std::string& path, bool keep_aspect)
+{
   check(impl_);
   PdfImage image(impl_->doc.handle());
   image.LoadFromFile(path.c_str());
@@ -271,42 +300,50 @@ void page::draw_image(rect rc, const std::string& path, bool keep_aspect) {
   impl_->painter.DrawImage(rc.x, impl_->cy - rc.y - rc.cy, &image, scale_x, scale_y);
 }
 
-units page::font_top() const {
+units page::font_top() const
+{
   check(impl_);
   return impl_->font_ascent + impl_->font_descent;
 }
 
-units page::font_bottom() const {
+units page::font_bottom() const
+{
   check(impl_);
   return -impl_->font_descent;
 }
 
-units page::font_height() const {
+units page::font_height() const
+{
   check(impl_);
   return impl_->font_ascent;
 }
 
-units page::cx() const {
+units page::cx() const
+{
   check(impl_);
   return impl_->cx;
 }
 
-units page::cy() const {
+units page::cy() const
+{
   check(impl_);
   return impl_->cy;
 }
 
-void page::painter_save() {
+void page::painter_save()
+{
   check(impl_);
   impl_->painter.Save();
 }
 
-void page::painter_restore() {
+void page::painter_restore()
+{
   check(impl_);
   impl_->painter.Restore();
 }
 
-PdfPage* page::handle() const {
+PdfPage* page::handle() const
+{
   check(impl_);
   return impl_->page;
 }
