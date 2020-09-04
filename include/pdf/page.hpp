@@ -66,8 +66,7 @@ public:
 
   void font(font font, units size = 10);
 
-  units
-  draw_text(const point& pt, const std::string& text, units cx = 0, alignment align = alignment::left);
+  units draw_text(const point& pt, const std::string& text, units cx = 0, alignment align = alignment::left);
   units draw_text_90(
     const double& angle,
     const units& x,
