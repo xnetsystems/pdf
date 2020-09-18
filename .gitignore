@@ -8,7 +8,10 @@
 !/.editorconfig
 !/.gitignore
 !/CMakeLists.txt
+!/CMakeSettings.json
 !/CONTROL
 !/license.txt
+!/make.cmd
+!/makefile
 !/portfile.cmake
 !/readme.md

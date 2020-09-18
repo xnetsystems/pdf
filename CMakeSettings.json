@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeToolchain": "${env.VCPKG_ROOT}\\triplets\\toolchains\\windows.cmake",
+      "buildRoot": "${projectDir}\\build\\windows\\debug",
+      "installRoot": "${projectDir}\\build\\install"
+    },
+    {
+      "name": "Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeToolchain": "${env.VCPKG_ROOT}\\triplets\\toolchains\\windows.cmake",
+      "buildRoot": "${projectDir}\\build\\windows\\release",
+      "installRoot": "${projectDir}\\build\\install"
+    }
+  ]
+}
