@@ -17,6 +17,9 @@ endif()
 find_package(PoDoFo REQUIRED)
 target_link_libraries(pdf PRIVATE podofo::podofo)
 
+find_package(OpenSSL REQUIRED)
+target_link_libraries(pdf PRIVATE OpenSSL::Crypto)
+
 find_package(Utf8Proc REQUIRED)
 target_link_libraries(pdf PUBLIC utf8proc::utf8proc)
 
